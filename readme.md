@@ -1,2 +1,1 @@
-iMX6 Rex Project
-Go to http://www.imx6rex.com/
+iMX6 Rex Project. Go to http://www.imx6rex.com/
