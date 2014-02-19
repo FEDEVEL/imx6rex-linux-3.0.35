@@ -55,7 +55,6 @@ static iomux_v3_cfg_t mx6q_sabresd_pads[] = {
 	MX6Q_PAD_RGMII_RD3__ENET_RGMII_RD3,
 	MX6Q_PAD_RGMII_RX_CTL__ENET_RGMII_RX_CTL,
 	MX6Q_PAD_ENET_TX_EN__GPIO_1_28,			// Micrel RGMII Phy Interrupt
-	MX6Q_PAD_ENET_RXD1__GPIO_1_26,			// Orig ETH Interrupt
 	MX6Q_PAD_ENET_CRS_DV__GPIO_1_25,		// RGMII reset
 	MX6Q_PAD_GPIO_16__ENET_ANATOP_ETHERNET_REF_OUT, // Internal connect for 1588 TS Clock
 
@@ -89,7 +88,7 @@ static iomux_v3_cfg_t mx6q_sabresd_pads[] = {
 	//!mm MX6Q_PAD_NANDF_D7__USDHC2_DAT7,
 	MX6Q_PAD_NANDF_D2__GPIO_2_2,			// SD2_CD
 	MX6Q_PAD_NANDF_D3__GPIO_2_3,			// SD2_WP
-	MX6Q_PAD_GPIO_6__USDHC2_LCTL,			// SD2_Activity
+	MX6Q_PAD_GPIO_6__USDHC2_LCTL,			//!mm Rex: Add SD2_Activity
 
 	// SD3
 	MX6Q_PAD_SD3_CLK__USDHC3_CLK_50MHZ,
@@ -126,13 +125,13 @@ static iomux_v3_cfg_t mx6q_sabresd_pads[] = {
 	MX6Q_PAD_EIM_D22__GPIO_3_22,		// USBO OTG PWR EN		
 	MX6Q_PAD_GPIO_1__USBOTG_ID,		// USB0 OTG ID
 	MX6Q_PAD_EIM_D30__USBOH3_USBH1_OC,	// USB1 OC
-	MX6Q_PAD_EIM_D31__GPIO_3_31,		// USB1 PWR EN
+	MX6Q_PAD_EIM_D31__USBOH3_USBH1_PWR,	// USB1 PWR EN
 
 	// RSTOUT
 	MX6Q_PAD_EIM_A25__GPIO_5_2,
 	
 	// WDOG
-	MX6Q_PAD_DISP0_DAT8__WDOG1_WDOG_B,
+	MX6Q_PAD_DISP0_DAT8__WDOG1_WDOG_B
 
 	// TOUCHSCREEN INT
 	MX6Q_PAD_NANDF_WP_B__GPIO_6_9,
@@ -149,6 +148,106 @@ static iomux_v3_cfg_t mx6q_sabresd_pads[] = {
 
 	// USER LED
 	MX6Q_PAD_GPIO_2__GPIO_1_2,
+
+
+
+
+	/* MX6Q_PAD_KEY_COL2__CAN1_TXCAN, */
+	//!mm Rex:USB0_ID MX6Q_PAD_GPIO_1__WDOG2_WDOG_B,		/*WDOG_B to reset pmic*/
+	//!mm Rex:NC MX6Q_PAD_GPIO_7__GPIO_1_7,		/* NERR */
+
+	/* CCM  */
+	
+	//!mm Rex:NC MX6Q_PAD_GPIO_3__CCM_CLKO2,		/* J5 - Camera MCLK */
+
+
+
+	
+	/* GPIO1 */
+	//!mm Rex:NC MX6Q_PAD_ENET_RX_ER__GPIO_1_24,		/* J9 - Microphone Detect */
+
+	/* GPIO2 */
+	/* MX6Q_PAD_NANDF_D1__GPIO_2_1,*/	/* J14 - Menu Button */ //!mm Rex: SD3_WP
+	/* MX6Q_PAD_NANDF_D2__GPIO_2_2,*/	/* J14 - Back Button */ //!mm Rex: SD2_CD
+	/* MX6Q_PAD_NANDF_D3__GPIO_2_3,*/	/* J14 - Search Button */ //!mm Rex: SD2_WP
+	/* MX6Q_PAD_NANDF_D4__GPIO_2_4,*/	/* J14 - Home Button */ //!mm Rex: SD2_DATA4
+	//!mm Rex:NC MX6Q_PAD_EIM_A22__GPIO_2_16,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_A21__GPIO_2_17,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_A20__GPIO_2_18,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_A19__GPIO_2_19,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_A18__GPIO_2_20,	/* J12 - Boot Mode Select */
+
+	//!mm Rex:NC MX6Q_PAD_EIM_RW__GPIO_2_26,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_LBA__GPIO_2_27,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_EB0__GPIO_2_28,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_EB1__GPIO_2_29,	/* J12 - Boot Mode Select */
+
+	/* GPIO3 */
+	//!mm Rex:NC MX6Q_PAD_EIM_DA0__GPIO_3_0,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_DA1__GPIO_3_1,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_DA2__GPIO_3_2,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_DA3__GPIO_3_3,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_DA4__GPIO_3_4,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_DA5__GPIO_3_5,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_DA6__GPIO_3_6,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_DA7__GPIO_3_7,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_DA8__GPIO_3_8,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_DA9__GPIO_3_9,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_DA10__GPIO_3_10,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_DA11__GPIO_3_11,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_DA12__GPIO_3_12,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_DA13__GPIO_3_13,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_DA14__GPIO_3_14,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_DA15__GPIO_3_15,	/* J12 - Boot Mode Select */
+
+	/* SW4 , SW5 & SW1 */
+	//!mm Rex:NC MX6Q_PAD_GPIO_4__GPIO_1_4,	/* Volume Up */
+	//!mm Rex:NC MX6Q_PAD_GPIO_5__GPIO_1_5,	/* Volume Down */
+	//!mm Rex:NC MX6Q_PAD_EIM_D29__GPIO_3_29,	/* power off */
+
+
+
+	/* CAP_TCH_INT0 */
+	//!mm Rex:NC MX6Q_PAD_NANDF_ALE__GPIO_6_8,
+
+	/* eCompass int */
+	//!mm Rex:NC MX6Q_PAD_EIM_D16__GPIO_3_16,
+
+	/* GPIO5 */
+	//!mm Rex:NC MX6Q_PAD_EIM_WAIT__GPIO_5_0,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_EIM_A24__GPIO_5_4,	/* J12 - Boot Mode Select */
+
+	/* GPIO6 */
+	//!mm Rex:NC MX6Q_PAD_EIM_A23__GPIO_6_6,	/* J12 - Boot Mode Select */
+	//!mm Rex:NC MX6Q_PAD_NANDF_RB0__GPIO_6_10, /* AUX_5V Enable */
+
+
+	//!mm Rex:NC MX6Q_PAD_GPIO_9__GPIO_1_9,			/* MICROPHONE_DET */
+
+
+
+	/* Charge */
+	
+	//!mm Rex:NC MX6Q_PAD_EIM_DA13__GPIO_3_13, /* CHG_2_B  */
+	//!mm Rex:NC MX6Q_PAD_EIM_DA14__GPIO_3_14, /* FLT_2_B */
+
+	//!mm Rex:NC MX6Q_PAD_ENET_RXD0__GPIO_1_27, /* UOK_B */
+	//!mm Rex:NC MX6Q_PAD_EIM_CS1__GPIO_2_24,   /* DOK_B */
+
+	/* Audio Codec */
+	//!mm Rex:NC MX6Q_PAD_KEY_COL2__GPIO_4_10,		/* CODEC_PWR_EN */
+	//!mm Rex:NC MX6Q_PAD_SD3_RST__GPIO_7_8,			/* HEADPHONE_DET */
+
+
+	//!mm Rex:NC MX6Q_PAD_GPIO_17__GPIO_7_12, /* PCIE_RST */
+	//!mm Rex:NC MX6Q_PAD_KEY_COL4__GPIO_4_14, /* PCIE_DIS */
+
+	/* DISP_RST_B */
+	//!mm Rex:NC MX6Q_PAD_NANDF_CS0__GPIO_6_11,
+	/* DISP_PWR_EN */
+	//!mm Rex:NC MX6Q_PAD_NANDF_CS1__GPIO_6_14,
+
+
 };
 
 static iomux_v3_cfg_t mx6q_sabresd_csi0_sensor_pads[] = {

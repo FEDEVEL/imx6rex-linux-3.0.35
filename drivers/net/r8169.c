@@ -4061,7 +4061,7 @@ static void rtl_hw_start_8168e(void __iomem *ioaddr, struct pci_dev *pdev)
 
 	rtl_ephy_init(ioaddr, e_info_8168e, ARRAY_SIZE(e_info_8168e));
 
-	rtl_tx_performance_tweak(pdev, 0x5 << MAX_READ_REQUEST_SHIFT);
+	//rtl_tx_performance_tweak(pdev, 0x5 << MAX_READ_REQUEST_SHIFT); ////has to be disabled, otherwise this error: NETDEV WATCHDOG transmit queue 0 timed out
 
 	RTL_W8(MaxTxPacketSize, TxPacketMax);
 
