@@ -602,7 +602,7 @@ static const struct snd_kcontrol_new sgtl5000_snd_controls[] = {
 			5, 1, 0),
 
 	SOC_SINGLE_TLV("Mic Volume", SGTL5000_CHIP_MIC_CTRL,
-			0, 4, 0, mic_gain_tlv),
+			0, 3, 0, mic_gain_tlv),	//!mm driver mic fix - changed from 4 to 3
 
 	/* Bass Enhance enable */
 	SOC_SINGLE("Bass Enable", SGTL5000_DAP_BASS_ENHANCE,
@@ -996,10 +996,11 @@ static int ldo_regulator_enable(struct regulator_dev *dev)
 	codec->write(codec, SGTL5000_CHIP_LINREG_CTRL, reg);
 
 	reg = codec->hw_read(codec, SGTL5000_CHIP_ANA_POWER);
-	reg |= SGTL5000_LINEREG_D_POWERUP;
+	//!mm do not enable LDO, orig: reg |= SGTL5000_LINEREG_D_POWERUP;
 	codec->write(codec, SGTL5000_CHIP_ANA_POWER, reg);
 
 	reg &= ~SGTL5000_LINREG_SIMPLE_POWERUP;
+	reg &= ~SGTL5000_STARTUP_POWERUP;	//!mm needed if external VDDD is used
 	/* when internal ldo enabled, simple digital power can be disabled */
 	codec->write(codec, SGTL5000_CHIP_ANA_POWER, reg);
 

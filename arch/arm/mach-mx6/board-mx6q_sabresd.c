@@ -388,8 +388,6 @@ static int mx6_sabrelite_sgtl5000_init(void)
 	struct clk *new_parent;
 	int rate;
 
-	pr_err("SGT5000 Init Start\n");
-
 	clko = clk_get(NULL, "clko_clk");
 	if (IS_ERR(clko)) {
 		pr_err("can't get CLKO clock.\n");
@@ -410,7 +408,6 @@ static int mx6_sabrelite_sgtl5000_init(void)
 	mx6_sabrelite_audio_data.sysclk = rate;
 	clk_set_rate(clko, rate);
 	clk_enable(clko);
-	pr_err("SGT5000 Init End\n");
 	return 0;
 }
 
