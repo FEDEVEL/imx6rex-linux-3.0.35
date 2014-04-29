@@ -257,13 +257,14 @@ static inline void mx6q_sabresd_init_uart(void)
 	imx6q_add_imx_uart(1, NULL);
 }
 
+/* !mm used fec init function from sabre lite
 static int mx6q_sabresd_fec_phy_init(struct phy_device *phydev)
 {
 	unsigned short val;
 
-	/* Ar8031 phy SmartEEE feature cause link status generates glitch,
-	 * which cause ethernet link down/up issue, so disable SmartEEE
-	 */
+	// Ar8031 phy SmartEEE feature cause link status generates glitch,
+	//which cause ethernet link down/up issue, so disable SmartEEE
+	 
 	phy_write(phydev, 0xd, 0x3);
 	phy_write(phydev, 0xe, 0x805d);
 	phy_write(phydev, 0xd, 0x4003);
@@ -271,7 +272,7 @@ static int mx6q_sabresd_fec_phy_init(struct phy_device *phydev)
 	val &= ~(0x1 << 8);
 	phy_write(phydev, 0xe, val);
 
-	/* To enable AR8031 ouput a 125MHz clk from CLK_25M */
+	// To enable AR8031 ouput a 125MHz clk from CLK_25M 
 	phy_write(phydev, 0xd, 0x7);
 	phy_write(phydev, 0xe, 0x8016);
 	phy_write(phydev, 0xd, 0x4007);
@@ -282,17 +283,40 @@ static int mx6q_sabresd_fec_phy_init(struct phy_device *phydev)
 	phy_write(phydev, 0xe, val);
 	
 	//!mm check delay
-	/* Introduce tx clock delay */
+	// Introduce tx clock delay 
 	phy_write(phydev, 0x1d, 0x5);
 	val = phy_read(phydev, 0x1e);
 	val |= 0x0100;
 	phy_write(phydev, 0x1e, val);
 
-	/*check phy power*/
+	//check phy power
 	val = phy_read(phydev, 0x0);
 
 	if (val & BMCR_PDOWN)
 		phy_write(phydev, 0x0, (val & ~BMCR_PDOWN));
+
+	return 0;
+}
+*/
+
+//!mm used function from sabre lite (the name was changed)
+static int mx6q_sabresd_fec_phy_init(struct phy_device *phydev)
+{
+	/* prefer master mode, disable 1000 Base-T capable */
+	phy_write(phydev, 0x9, 0x1c00);
+
+	/* min rx data delay */
+	phy_write(phydev, 0x0b, 0x8105);
+	phy_write(phydev, 0x0c, 0x0000);
+
+	/* min tx data delay */
+	phy_write(phydev, 0x0b, 0x8106);
+	phy_write(phydev, 0x0c, 0x0000);
+
+	/* max rx/tx clock delay, min rx/tx control delay */
+	phy_write(phydev, 0x0b, 0x8104);
+	phy_write(phydev, 0x0c, 0xf0f0);
+	phy_write(phydev, 0x0b, 0x104);
 
 	return 0;
 }
