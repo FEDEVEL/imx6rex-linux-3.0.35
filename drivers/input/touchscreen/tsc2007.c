@@ -300,7 +300,8 @@ static int __devinit tsc2007_probe(struct i2c_client *client,
 	ts->get_pendown_state = pdata->get_pendown_state;
 	ts->clear_penirq      = pdata->clear_penirq;
 
-	pdata->init_platform_hw();
+	if (pdata->init_platform_hw)
+		pdata->init_platform_hw();
 
 	if (tsc2007_xfer(ts, PWRDOWN) < 0) {
 		err = -ENODEV;

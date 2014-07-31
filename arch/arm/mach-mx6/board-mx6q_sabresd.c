@@ -31,6 +31,7 @@
 #include <linux/spi/spi.h>
 #include <linux/spi/flash.h>
 #include <linux/i2c.h>
+#include <linux/i2c/tsc2007.h>
 #include <linux/i2c/pca953x.h>
 #include <linux/ata.h>
 #include <linux/mtd/mtd.h>
@@ -119,7 +120,9 @@
 #define SABRESD_USB_OTG_PWR	IMX_GPIO_NR(3, 22)
 #define SABRESD_USB_H1_PWR	IMX_GPIO_NR(3, 31)
 #define SABRESD_CHARGE_CHG_1_B	IMX_GPIO_NR(3, 23)
-#define SABRESD_TS_INT		IMX_GPIO_NR(3, 26)
+//!mm #define SABRESD_TS_INT		IMX_GPIO_NR(3, 26)
+//!mm iMX6Rex touschreen interrupt TSC2007
+#define SABRESD_TS_INT		IMX_GPIO_NR(6, 9)
 #define SABRESD_DISP0_RD	IMX_GPIO_NR(3, 28)
 #define SABRESD_POWER_OFF	IMX_GPIO_NR(3, 29)
 
@@ -140,8 +143,10 @@
 #define SABRESD_DISP_PWR_EN	IMX_GPIO_NR(6, 14)
 #define SABRESD_CABC_EN0	IMX_GPIO_NR(6, 15)
 #define SABRESD_CABC_EN1	IMX_GPIO_NR(6, 16)
-#define SABRESD_AUX_3V15_EN	IMX_GPIO_NR(6, 9)
-#define SABRESD_DISP0_WR_REVB	IMX_GPIO_NR(6, 9)
+//!mm #define SABRESD_AUX_3V15_EN	IMX_GPIO_NR(6, 9)
+#define SABRESD_AUX_3V15_EN	IMX_GPIO_NR(3, 26) //!mm 
+//!mm #define SABRESD_DISP0_WR_REVB	IMX_GPIO_NR(6, 9)
+#define SABRESD_DISP0_WR_REVB	IMX_GPIO_NR(3, 26) //!mm
 #define SABRESD_AUX_5V_EN	IMX_GPIO_NR(6, 10)
 #define SABRESD_DI1_D0_CS	IMX_GPIO_NR(6, 31)
 
@@ -963,6 +968,11 @@ static struct fsl_mxc_lightsensor_platform_data ls_data = {
 	.rext = 499,	/* calibration: 499K->700K */
 };
 
+static struct tsc2007_platform_data tsc2007_info = {
+	.model			= 2007,
+	.x_plate_ohms		= 500,
+};
+
 static struct i2c_board_info mxc_i2c0_board_info[] __initdata = {
 	{
 		//!mm I2C_BOARD_INFO("wm89**", 0x1a),
@@ -992,9 +1002,15 @@ static struct i2c_board_info mxc_i2c1_board_info[] __initdata = {
 		I2C_BOARD_INFO("egalax_ts", 0x4),
 		.irq = gpio_to_irq(SABRESD_CAP_TCH_INT0),
 	},
-	{
+	/*!mm {
 		I2C_BOARD_INFO("max11801", 0x48),
 		.platform_data = (void *)&max11801_mode,
+		.irq = gpio_to_irq(SABRESD_TS_INT),
+	},*/
+	{
+		I2C_BOARD_INFO("tsc2007", 0x48),
+		.type = "tsc2007",
+		.platform_data	= &tsc2007_info,
 		.irq = gpio_to_irq(SABRESD_TS_INT),
 	},
 };
@@ -2122,6 +2138,11 @@ static void __init mx6_sabresd_board_init(void)
 	/* enable light sensor intr */
 	//!mm gpio_request(SABRESD_ALS_INT, "als-int");
 	//!mm gpio_direction_input(SABRESD_ALS_INT);
+
+	//!mm setup touchscreen interrupt initialization
+	gpio_request(SABRESD_TS_INT, "tsc2007_irq");
+	gpio_direction_input(SABRESD_TS_INT);
+	gpio_free(SABRESD_TS_INT);
 
 	imx6q_add_hdmi_soc();
 	imx6q_add_hdmi_soc_dai();
