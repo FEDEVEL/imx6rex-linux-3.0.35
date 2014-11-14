@@ -197,7 +197,22 @@ static void tsc2007_work(struct work_struct *work)
 
 	}
 
-	if (rt) {
+//orig	if (rt) {
+
+//start !rf! hard coded fix
+//we had some touchsreens, which sometimes return low X value instead of 0 even if they are not pressed. This is work around the problem:
+
+//	dev_err(&ts->client->dev, "tc.x = %4u / tc.y = %4u / rt = %4u\n", tc.x, tc.y, rt); //debug output, use in the case you need to see what values are read from your touchscreen
+
+	u32 IMUNITY = 100; //this value will make a frame around the touchscreen, where it will not be sensitive. Use a small value, so the frame is very thin.
+
+	if 	(
+			(rt != 0) && 
+			(tc.x > IMUNITY) && (tc.x < (4095 - IMUNITY)) &&
+			(tc.y > IMUNITY) && (tc.y < (4095 - IMUNITY))
+		) { //if X or Y is 0 or it has a low a value, or if X or Y has almost the full value, the touchscreen is probably not pressed (maybe noise?)
+//end of the fix
+
 		struct input_dev *input = ts->input;
 
 		if (!ts->pendown) {
